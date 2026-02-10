@@ -1,0 +1,645 @@
+/* src/styles/App.css */
+
+/* General Layout */
+/* --vscode-editor-font-family is not a default css variable in VSCode extensions
+it needs to be injected in extension.ts */
+:root {
+  font-size: var(--vscode-font-size, 13px);
+}
+
+body {
+  font-family: var(--vscode-font-family),'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 1rem;
+  margin: 0;
+  background-color: var(--vscode-editor-background, #f8f9fa);
+  color: var(--vscode-editor-foreground, #202124);
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* root div*/
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.app-container {
+  width: 100%;
+  /*max-width: 1800px;*/
+  display: flex;
+  flex-direction: column;
+  height:98vh;
+  background-color: var(--vscode-editor-background, #ffffff);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  border: 1px solid var(--vscode-editorWidget-border, #dadce0);
+}
+
+/* Styled buttons for expand/collapse */
+header button {
+  background: var(--vscode-button-background, linear-gradient(90deg, #4f8cff 0%, #38c6ff 100%));
+  color: var(--vscode-button-foreground, #fff);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(79, 140, 255, 0.08);
+  transition: background 0.2s, transform 0.1s;
+}
+
+header button:hover, header button:focus {
+  background: var(--vscode-button-hoverBackground, linear-gradient(90deg, #357ae8 0%, #1fa7e6 100%));
+  color: var(--vscode-button-foreground, #fff);
+  transform: translateY(-2px) scale(1.04);
+  outline: none;
+}
+
+header button:active {
+  background: var(--vscode-button-background, linear-gradient(90deg, #2c5fb8 0%, #178bb8 100%));
+  color: var(--vscode-button-foreground, #fff);
+  transform: scale(0.98);
+}
+/* Header */
+header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--vscode-editorWidget-border, #dadce0);
+  background-color: var(--vscode-sideBar-background, #ffffff);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--vscode-sideBar-foreground, #202124);
+  font-weight: 500;
+}
+
+header p {
+  margin: 8px 0 0;
+  color: var(--vscode-descriptionForeground, #5f6368);
+  font-size: 0.95rem;
+}
+
+/* Main Content Area */
+main {
+  display: flex;
+  flex-grow: 1;
+  min-height: 0;
+  overflow: hidden;
+  /* Allow child panes to be resizable */
+}
+
+/* Editor and Visualization Panes */
+.editor-pane,
+.visualization-pane {
+  padding: 16px;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-pane {
+  width: 15%;
+  min-width: 100px;
+  max-width: 20vw;
+  border-right: 1px solid var(--vscode-editorWidget-border, #dadce0);
+  background-color: var(--vscode-editor-background, #f8f9fa);
+  resize: horizontal;
+  overflow: auto;
+  z-index: 1;
+}
+
+.visualization-pane {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--vscode-editor-background, #f8f9fa);
+  border-radius: 0 0 8px 8px; /* Only bottom corners rounded */
+  margin-top: 0;
+}
+
+/* JsonEditor Component Styles */
+.editor-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-wrapper textarea {
+  width: 100%;
+  flex-grow: 1;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  /*font-family: 'Roboto Mono', 'Courier New', Courier, monospace;*/
+  font-size: 1rem;
+  box-sizing: border-box;
+  resize: none;
+  margin: 0;
+  padding: 12px;
+  background-color: var(--vscode-input-background, #ffffff);
+  color: var(--vscode-input-foreground, #202124);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s ease;
+}
+
+.editor-wrapper textarea:focus {
+  outline: none;
+  border-color: var(--vscode-focusBorder, #4285F4);
+  box-shadow: 0 0 0 1px var(--vscode-focusBorder, #4285F4);
+}
+
+.error-message {
+  margin: 12px;
+  padding: 10px 12px;
+  background-color: var(--vscode-editorError-background, #fce8e6);
+  color: var(--vscode-editorError-foreground, #d93025);
+  border: 1px solid var(--vscode-editorError-border, #fad2cf);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+/* ObjectVisualizationD3 Component Styles */
+.visualization-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  border-radius: 0 0 8px 8px;
+    /* Only bottom corners rounded */
+  margin-top: 0;
+  background-color: var(--vscode-editor-background, #ffffff);
+  box-shadow: inset 0 0 0px rgba(0, 0, 0, 0.05);
+}
+
+.visualization-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+}
+
+.visualization-svg:active {
+  cursor: grabbing;
+}
+
+/* --- D3 Specific Styles --- */
+/* Marker Arrowhead */
+.arrowhead-path {
+  fill: var(--vscode-editorBracketHighlight-foreground3, #5f6368);
+}
+
+/* Cell Dividers */
+.cell-divider-top,
+.cell-divider-bottom {
+  stroke: var(--vscode-focusBorder, #e1e4e8);
+  stroke-width: 0.5px;
+  opacity: 0.9;
+}
+
+/* Cell Backgrounds (hover highlight) */
+.cell-background {
+  fill: var(--vscode-editorWidget-background, #f6f8fa);
+  stroke: none;
+}
+
+/* Child Link Dot Active State */
+.child-link-dot.active {
+  fill: var(--vscode-focusBorder, #4285F4) !important;
+}
+
+/* Node Groups */
+.node-group {
+  cursor: default;
+}
+
+.node-group rect {
+  stroke-width: 1.5px;
+  fill: var(--vscode-editorWidget-background, #ffffff);
+  cursor: grab;
+}
+
+.node-group:active rect {
+  cursor: grabbing;
+}
+
+.node-group rect.object-box {
+  stroke: var(--vscode-editorBracketHighlight-foreground3, #5f6368);
+}
+
+.node-group rect.array-box {
+  stroke: var(--vscode-editorBracketHighlight-foreground1, #34A853);
+  stroke-dasharray: 5 3;
+}
+
+/* Node Text */
+.node-text {
+  font-size: 1rem;
+  /*font-family: 'Roboto Mono', monospace;*/
+  fill: var(--vscode-editor-foreground, #202124);
+  user-select: none;
+  pointer-events: none;
+}
+
+.node-text-object {
+  fill: var(--vscode-editorBracketHighlight-foreground3, #5f6368);
+}
+
+.node-text-array {
+  fill: var(--vscode-editorBracketHighlight-foreground1, #34A853);
+}
+
+.node-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  fill: var(--vscode-editor-foreground, #202124);
+}
+
+.node-field {
+  font-weight: 400;
+}
+
+.field-key {
+  fill: var(--vscode-editor-foreground, #202124);
+  font-weight: 500;
+}
+
+.field-value {
+  fill: var(--vscode-editorHint-foreground, #5f6368);
+  font-weight: 400;
+}
+
+.node-child-link {
+  /*fill: var(--vscode-editorBracketHighlight-foreground3, #5f6368);*/
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.875rem;
+}
+
+/* --- New Styles for Child Link Dots --- */
+.child-link-dots {
+  /* Group for child link indicator dots */
+}
+
+.child-link-dot {
+  fill: var(--vscode-editorBracketHighlight-foreground3, #5f6368); /* Match link color */
+  stroke: none;
+}
+/* --- End New Styles --- */
+
+/* Links (now styled directly in D3 component) */
+.link {
+  stroke: var(--vscode-editorBracketHighlight-foreground3, #5f6368);
+  stroke-opacity: 0.8;
+  stroke-width: 1px;
+  fill: none;
+}
+
+/* Paging Button Bar Styles */
+.node-group .array-page-btn-rect {
+  fill: var(--vscode-editor-background, #f0f0f0);
+  stroke: var(--vscode-checkbox-foreground, #bdbdbd);
+}
+
+.node-group .array-page-btn-rect.disabled {
+  fill: var(--vscode-editor-background, #e0e0e0);
+  stroke: var(--vscode-checkbox-disabled-foreground, #bdbdbd);
+}
+
+.node-group .array-page-btn-text {
+  fill: var(--vscode-checkbox-foreground, #333);
+}
+
+.node-group .array-page-btn-text.disabled {
+  fill: var(--vscode-checkbox-disabled-foreground, #aaa);
+}
+
+.node-group .array-page-text {
+  fill: var(--vscode-checkbox-foreground, #666);
+}
+
+/* Tab Header */
+.tab-header {
+  display: flex;
+  border-bottom: 2px solid var(--vscode-tab-border, #cccccc);
+  margin-top: 1rem;
+}
+
+/* Tab Style */
+.tab {
+  padding: 10px 16px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-bottom: none;
+  margin-right: 4px;
+  font-weight: 500;
+  color: var(--vscode-tab-inactiveForeground, #555555);
+  background-color: var(--vscode-tab-inactiveBackground, #f5f5f5);
+  border-radius: 6px 6px 0 0;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Tab Hover Style */
+.tab:hover {
+  background-color: var(--vscode-tab-hoverBackground, #e0e0e0);
+}
+
+/* Active Tab */
+.tab.active {
+  border-color: var(--vscode-tab-activeBorder, #cccccc);
+  border-bottom: 2px solid var(--vscode-editor-background, #ffffff);
+  background-color: var(--vscode-tab-activeBackground, #ffffff);
+  color: var(--vscode-tab-activeForeground, #000000);
+  font-weight: bold;
+}
+
+/* Trace Row Styles for TimeSeriesPlotPane */
+.trace-row {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+  margin-left: 32px;
+  margin-right: 32px;
+  margin-bottom: 4px;
+  gap: 8px;
+  border: 1px solid var(--vscode-editorWidget-border, #dadce0);
+  border-radius: 6px;
+  padding: 8px;
+  background: var(--vscode-editorWidget-background, #f6f8fa);
+}
+
+/* Consistent Button Style for VSCode UI */
+.vscode-btn {
+  background: var(--vscode-button-background, linear-gradient(90deg, #4f8cff 0%, #38c6ff 100%));
+  color: var(--vscode-button-foreground, #fff);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(79, 140, 255, 0.08);
+  transition: background 0.2s, transform 0.1s;
+}
+
+.vscode-btn:hover,
+.vscode-btn:focus {
+  background: var(--vscode-button-hoverBackground, linear-gradient(90deg, #357ae8 0%, #1fa7e6 100%));
+  color: var(--vscode-button-foreground, #fff);
+  transform: translateY(-2px) scale(1.04);
+  outline: none;
+}
+
+.vscode-btn:active {
+  background: var(--vscode-button-background, linear-gradient(90deg, #2c5fb8 0%, #178bb8 100%));
+  color: var(--vscode-button-foreground, #fff);
+  transform: scale(0.98);
+}
+
+/* Remove Trace Button (smaller, icon only) */
+.trace-remove-btn {
+  padding: 4px 10px;
+  font-size: 1.1rem;
+  margin-left: 8px;
+}
+
+/* Color Input for Trace */
+.trace-color-input {
+  width: 32px;
+  height: 24px;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0 2px;
+  cursor: pointer;
+}
+
+/* Error Message for Trace */
+.trace-error {
+  color: var(--vscode-editorError-foreground, #d93025);
+  margin-left: 8px;
+  font-size: 0.95rem;
+}
+
+/* Opacity Input for Trace */
+.trace-opacity-input {
+  width: 60px;
+  height: 24px;
+  border: 1px solid var(--vscode-editorWidget-border, #dadce0);
+  border-radius: 6px;
+  background: var(--vscode-input-background, #fff);
+  color: var(--vscode-input-foreground, #202124);
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 500;
+  padding: 2px 8px;
+  margin: 0 2px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 4px rgba(79, 140, 255, 0.04);
+}
+
+.trace-opacity-input:focus {
+  border-color: var(--vscode-focusBorder, #4285F4);
+  box-shadow: 0 0 0 1px var(--vscode-focusBorder, #4285F4);
+}
+
+/* --- Custom Checkbox for Secondary Y-Axis (y2) --- */
+.trace-row input[type="checkbox"] {
+  accent-color: var(--vscode-button-background, #4f8cff);
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1.5px solid var(--vscode-editorWidget-border, #dadce0);
+  background: var(--vscode-input-background, #fff);
+  margin: 0 2px;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.trace-row input[type="checkbox"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--vscode-focusBorder, #4285F4);
+  border-color: var(--vscode-focusBorder, #4285F4);
+}
+
+.trace-row input[type="checkbox"]:hover {
+  border-color: var(--vscode-button-hoverBackground, #357ae8);
+}
+
+.trace-row label[title~="secondary"] {
+  margin-left: 4px;
+  margin-right: 2px;
+  font-size: 1rem;
+  color: var(--vscode-editor-foreground, #202124);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Controls for JSON visualization (Expand/Collapse/Zoom) */
+.json-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 0;
+  padding: 8px 16px 8px 16px;
+  border-radius: 8px 8px 0 0; /* Only top corners rounded */
+  align-items: center;
+  justify-content: flex-end;
+  background-color: var(--vscode-editor-background, #ffffff);
+}
+
+.json-controls button {
+  background: var(--vscode-button-background, linear-gradient(90deg, #4f8cff 0%, #38c6ff 100%));
+  color: var(--vscode-button-foreground, #fff);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(79, 140, 255, 0.08);
+  transition: background 0.2s, transform 0.1s;
+}
+
+.json-controls button:hover,
+.json-controls button:focus {
+  background: var(--vscode-button-hoverBackground, linear-gradient(90deg, #357ae8 0%, #1fa7e6 100%));
+  color: var(--vscode-button-foreground, #fff);
+  transform: translateY(-2px) scale(1.04);
+  outline: none;
+}
+
+.json-controls button:active {
+  background: var(--vscode-button-background, linear-gradient(90deg, #2c5fb8 0%, #178bb8 100%));
+  color: var(--vscode-button-foreground, #fff);
+  transform: scale(0.98);
+}
+
+/* ===========================
+   Color Picker Popover Styles
+   =========================== */
+
+.color-picker-popover {
+  position: absolute;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  background: var(--vscode-editorWidget-background, #fff);
+  border-radius: 10px;
+  padding: 18px 18px 12px 18px;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.color-picker-main-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 18px;
+}
+
+/* ============== 
+   Opacity column 
+   ============== */
+
+.vertical-opacity-slider {
+  margin-bottom: 10px;
+}
+
+.vertical-opacity-slider-thumb {
+  background: var(--vscode-focusBorder, #4285F4);
+}
+
+
+
+
+/* Presets */
+
+.color-picker-presets {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+  justify-content: center;
+}
+
+.color-picker-preset {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  margin: 2px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.10);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.08s ease;
+  background: transparent;
+}
+
+.color-picker-preset:hover,
+.color-picker-preset:focus-visible {
+  border-color: var(--vscode-focusBorder, #4285F4);
+  box-shadow: 0 0 0 2px var(--vscode-focusBorder, #4285F4);
+}
+
+.color-picker-preset:active {
+  transform: scale(0.98);
+}
+
+.color-picker-close {
+  margin-top: 8px;
+}
+
+/* --- Plotly Axis Dropdowns --- */
+.plotly-axis-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 18px;
+  padding-left: 4px;
+}
+
+.plotly-axis-label {
+  font-size: 1rem;
+  color: var(--vscode-editor-foreground, #202124);
+  font-weight: 500;
+  margin-right: 6px;
+}
+
+.plotly-axis-select {
+  background: var(--vscode-input-background, #fff);
+  color: var(--vscode-input-foreground, #202124);
+  border: 1px solid var(--vscode-editorWidget-border, #dadce0);
+  border-radius: 6px;
+  padding: 7px 16px 7px 10px;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 500;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 4px rgba(79, 140, 255, 0.04);
+  appearance: none;
+  min-width: 90px;
+  cursor: pointer;
+}
+
+.plotly-axis-select:focus {
+  border-color: var(--vscode-focusBorder, #4285F4);
+  box-shadow: 0 0 0 1px var(--vscode-focusBorder, #4285F4);
+}
+
+.plotly-axis-select:hover {
+  border-color: var(--vscode-button-hoverBackground, #357ae8);
+}

@@ -1,0 +1,169 @@
+{
+  "name": "python-debug-tools",
+  "displayName": "Python Debug Tools",
+  "description": "Utilities for python debugging.",
+  "icon": "img/logo_alpha.png",
+  "version": "0.0.6",
+  "publisher": "stdkoehler",
+  "engines": {
+    "vscode": "^1.102.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/src/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "panel": [
+        {
+          "id": "objectVisualizerPanel",
+          "title": "PDT Object Visualizer",
+          "icon": "media/assets/vite.svg"
+        },
+        {
+          "id": "dataPlotPanel",
+          "title": "PDT Data Plot",
+          "icon": "media/assets/vite.svg"
+        }
+      ]
+    },
+    "views": {
+      "objectVisualizerPanel": [
+        {
+          "id": "objectVisualizerView",
+          "name": "PDT Object Visualizer",
+          "type": "webview",
+          "icon": "media/assets/vite.svg"
+        }
+      ],
+      "dataPlotPanel": [
+        {
+          "id": "dataPlotView",
+          "name": "PDT Data Plot",
+          "type": "webview",
+          "icon": "media/assets/vite.svg"
+        }
+      ],
+      "debug": [
+        {
+          "id": "variableWorkspaceView",
+          "name": "PDT Variable Workspace",
+          "icon": "media/assets/vite.svg"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "python-debug-tools.menu",
+        "label": "Python Debug Tools",
+        "icon": "debug-alt"
+      }
+    ],
+    "menus": {
+      "debug/variables/context": [
+        {
+          "submenu": "python-debug-tools.menu",
+          "when": "inDebugMode",
+          "group": "navigation"
+        }
+      ],
+      "debug/watch/context": [
+        {
+          "submenu": "python-debug-tools.menu",
+          "when": "inDebugMode",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "submenu": "python-debug-tools.menu",
+          "when": "inDebugMode && editorTextFocus",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "python-debug-tools.removeWorkspaceVariable",
+          "when": "view == variableWorkspaceView && viewItem == workspaceVariables",
+          "group": "inline"
+        }
+      ],
+      "python-debug-tools.menu": [
+        {
+          "command": "python-debug-tools.copyAsJson",
+          "when": "inDebugMode",
+          "group": "1_tools@1"
+        },
+        {
+          "command": "python-debug-tools.visualizeObject",
+          "when": "inDebugMode",
+          "group": "1_tools@2"
+        },
+        {
+          "command": "python-debug-tools.addWorkspaceVariable",
+          "group": "1_tools@3"
+        },
+        {
+          "command": "python-debug-tools.copySelectionToDebugEditor",
+          "group": "1_tools@4"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "python-debug-tools.copyAsJson",
+        "title": "Copy as JSON"
+      },
+      {
+        "command": "python-debug-tools.visualizeObject",
+        "title": "Visualize Object"
+      },
+      {
+        "command": "python-debug-tools.addWorkspaceVariable",
+        "title": "Add to Workspace"
+      },
+      {
+        "command": "python-debug-tools.removeWorkspaceVariable",
+        "title": "Remove from Workspace"
+      },
+      {
+        "command": "python-debug-tools.copySelectionToDebugEditor",
+        "title": "Copy to Debug Editor"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run clean && npm run compile && npm --prefix webview-ui run build:prod",
+    "compile": "tsc -p ./",
+  "clean": "rimraf out",
+    "watch": "concurrently \"tsc -watch -p ./\" \"npm --prefix webview-ui run watch\"",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "build:webview:dev": "npm --prefix webview-ui run build:dev",
+    "build:webview:prod": "npm --prefix webview-ui run build:prod"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.102.0",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.25.1",
+    "typescript": "^5.8.3",
+    "rimraf": "^5.0.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stdkoehler/vscode-python-debug-tools.git"
+  },
+  "homepage": "https://github.com/stdkoehler/vscode-python-debug-tools/blob/main/README.md",
+  "dependencies": {
+    "uuid": "^11.1.0"
+  }
+}
