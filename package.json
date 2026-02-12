@@ -3,7 +3,7 @@
   "displayName": "Python Debug Tools (PDT)",
   "description": "Utilities for python debugging.",
   "icon": "img/logo_alpha.png",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "publisher": "stdkoehler",
   "engines": {
     "vscode": "^1.102.0"

@@ -78,6 +78,9 @@ This extension does not contribute any user settings.
 - Added PDT Data Plot
 - Added PDT Debug Editor
 
+### 0.0.7
+- Added documentation
+
 ---
 
 ## Contributing
