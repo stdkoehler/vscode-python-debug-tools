@@ -1,6 +1,6 @@
 {
   "name": "python-debug-tools",
-  "displayName": "Python Debug Tools",
+  "displayName": "Python Debug Tools (PDT)",
   "description": "Utilities for python debugging.",
   "icon": "img/logo_alpha.png",
   "version": "0.0.6",
@@ -138,7 +138,7 @@
   "scripts": {
     "vscode:prepublish": "npm run clean && npm run compile && npm --prefix webview-ui run build:prod",
     "compile": "tsc -p ./",
-  "clean": "rimraf out",
+    "clean": "rimraf out",
     "watch": "concurrently \"tsc -watch -p ./\" \"npm --prefix webview-ui run watch\"",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
